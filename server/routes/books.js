@@ -1,7 +1,7 @@
 'use strict'
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 const books = [
   {
@@ -66,23 +66,26 @@ router.get("/:id", (req, res) => {
   const foundBook = books.find(book => book.id == bookId)
   if (foundBook) {
     res.status(200).json(foundBook)
-  }else{
+  } else {
     res.status(404).send("<h1>404 Not found</h1>")
   }
 })
 
-router.post(`/`, (req, res) => {
-  const book = req.body
 
-  const newBook = {
+router.post("/", (req, res) => {
+
+  let book = req.body;
+  console.log("book", book);
+
+  let newBook = {
     id: books.length + 1,
-    author: book.author,
-    title: book.title,
-    pages: book.pages,
-    borrowed: false, 
-    blurb: book.blurb
+    title: req.body.title,
+    author: req.body.author,
+    pages: req.body.pages,
+    borrowed: false,
+    blurb: "Lorem Ipsum, Dolor!"
   }
-
+  console.log(newBook)
   books.push(newBook)
   res.status(200).json(books)
 })
